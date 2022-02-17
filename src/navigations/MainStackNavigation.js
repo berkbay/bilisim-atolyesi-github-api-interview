@@ -11,7 +11,7 @@ function MainStackNavigation() {
     return (
         <NavigationContainer>
             <Stack.Navigator initialRouteName="Profile">
-                <Stack.Screen name="Profile" component={ProfileScreen} screenOptions={{headerShown:false}}/>
+                <Stack.Screen name="Profile" component={ProfileScreen}/>
                 <Stack.Screen name="Repositories" component={RepositoriesScreen} />
             </Stack.Navigator>
         </NavigationContainer>
