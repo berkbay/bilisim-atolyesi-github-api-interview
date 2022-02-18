@@ -7,11 +7,11 @@ const INITIAL_STATE = {
 export const reducer = (state = INITIAL_STATE, action) => {
     switch (action.type) {
         case 'GET_USER_SUCCESS' :
-            return {...state, user: action.payload}
+            return {...state, user: action.payload, errorMessage: null}
         case 'GET_USER_PUBLIC_REPOS' :
             return {...state, repos: action.payload}
         case 'GET_ERROR' :
-            return {...state, errorMessage: action.payload}
+            return {...state, user:null, errorMessage: action.payload}
         default: return state
     }
 }

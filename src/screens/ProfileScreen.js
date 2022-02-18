@@ -9,22 +9,18 @@ import GoToRepositoryPage from "../components/GoToRepoButton";
 
 const ProfileScreen = () => {
 
-    const navigation = useNavigation()
     const user = useSelector((state) => state.user)
+    const errorMessage = useSelector((state) => state.errorMessage)
     const dispatch = useDispatch()
 
     const [userInput, setUserInput] = useState('');
-    const [error, setError] = useState(null)
 
-    useEffect(() => {
+    const searchUser = React.useCallback(() => {
         dispatch(getUser(userInput))
-        if(user.message) {
-            setError(user.message)
-        }else {
-            setError(null)
-        }
-    },[])
+        console.log('DEBUG USER',user)
+    },[userInput, user])
 
+    console.log('DEBUG ERROR', errorMessage)
 
     return (
         <SafeAreaView>
@@ -34,15 +30,15 @@ const ProfileScreen = () => {
                         style={styles.textInput}
                         value={userInput}
                         onChangeText={value => setUserInput(value)}/>
-                    <TouchableOpacity onPress={() => console.log(userInput)} style={styles.searchIcon}>
+                    <TouchableOpacity onPress={() => searchUser()} style={styles.searchIcon}>
                         <FontAwesome style={styles.searchIcon} name="search" size={24} color="black" />
                     </TouchableOpacity>
                 </View>
-                {error ? <View><Text>{error}</Text></View> :
+                {errorMessage ? <View><Text>{errorMessage}</Text></View> :
                     (<View>
                         <View style={{alignItems: 'center'}}>
                             <View style={styles.profileImage}>
-                                <Image source={{uri: user.avatar_url}} style={styles.image} resizeMode="center"/>
+                                <Image source={{uri: user?.avatar_url}} style={styles.image} resizeMode="center"/>
                             </View>
                         </View>
                         <View style={styles.userInfoContainer}>
