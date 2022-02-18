@@ -1,8 +1,8 @@
 import React from 'react';
-import { TouchableOpacity } from 'react-native';
+import { Share, TouchableOpacity } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 
-const Share = (props) => {
+const ShareUrl = (props) => {
     const onShare = async () => {
         try {
             const result = await Share.share({
@@ -28,4 +28,4 @@ const Share = (props) => {
     );
 };
 
-export default Share;
+export default ShareUrl;

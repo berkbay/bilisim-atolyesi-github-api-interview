@@ -1,7 +1,7 @@
 import {Text, View, StyleSheet, ScrollView} from "react-native";
 import React from "react";
 import {useSelector} from "react-redux";
-import Share from "./Share";
+import ShareUrl from "./Share";
 import Star from "./Star";
 
 const Repository = () => {
@@ -24,7 +24,7 @@ const Repository = () => {
                     </View>
                     <View style={{flexDirection: 'row', justifyContent: 'flex-end'}}>
                         <Star/>
-                        <Share url={item.url}/>
+                        <ShareUrl url={item.url}/>
                     </View>
                 </View>
             ) : (
