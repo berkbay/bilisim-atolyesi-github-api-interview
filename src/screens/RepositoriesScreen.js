@@ -1,6 +1,6 @@
 import React, {useEffect} from "react";
 import { View} from "react-native";
-import Repository from "../components/Repository";
+import Repository from "../components/RepositoryComponents/Repository";
 import {useDispatch} from "react-redux";
 import {getRepos} from "../store/actions";
 import {useRoute} from "@react-navigation/native";

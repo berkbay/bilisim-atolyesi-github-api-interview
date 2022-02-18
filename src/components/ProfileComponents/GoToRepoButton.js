@@ -22,9 +22,9 @@ export default GoToRepositoryPage;
 const styles = StyleSheet.create({
     button: {
         flexDirection:'row',
-        marginVertical:10,
+        marginVertical:20,
         marginHorizontal: 10,
-        borderWidth: 1,
+        borderWidth: 2,
         borderRadius: 10,
         backgroundColor: '#FFE690'
     },
