@@ -1,79 +1,74 @@
-import React, {useState} from "react";
-import {View, SafeAreaView, ScrollView, Image, StyleSheet, TextInput, Text} from "react-native";
+import React, {useEffect, useState} from "react";
+import {View, SafeAreaView, ScrollView, Image, StyleSheet, TextInput, Text, TouchableOpacity,} from "react-native";
 import {FontAwesome} from "@expo/vector-icons";
 
-
+import { useSelector, useDispatch} from "react-redux";
+import {getUser} from "../store/actions";
 
 const ProfileScreen = () => {
 
-    const [name, setName] = useState('');
-    const [userName, setUserName] = useState('');
-    const [followers, setFollowers] = useState('');
-    const [following, setFollowing] = useState('');
-    const [publicRepos, setPublicRepos] = useState('');
-    const [avatar, setAvatar] = useState('');
-    const [location, setLocation] = useState('');
-    const [company, setCompany] = useState('');
+    const user = useSelector((state) => state.user)
+    const dispatch = useDispatch()
+
     const [userInput, setUserInput] = useState('');
-    const [error, setError] = useState(null)
-    const [repos, setRepos] = useState('');
+    // const [error, setError] = useState(null)
 
-    const setData = ({name, login, followers, following, public_repos, avatar_url, location, company}) => {
-        setName(name);
-        setUserName(login);
-        setFollowers(followers);
-        setFollowing(following);
-        setPublicRepos(public_repos);
-        setAvatar(avatar_url);
-        setLocation(location);
-        setCompany(company)
-    }
-
-    const handleSearch = (username) => {
-        setUserInput(username)
-    }
+    useEffect(() => {
+        dispatch(getUser(userInput))
+    },[])
 
     return (
         <SafeAreaView>
             <ScrollView>
-                <View>
-                    <TextInput style={styles.textInput} onChangeText={handleSearch}>
-                        <FontAwesome name="search" size={24} color="black" style={{marginVertical:10, marginLeft:10}} />
-                    </TextInput>
+                <View style={{flexDirection: 'row'}}>
+                    <TextInput
+                        style={styles.textInput}
+                        value={userInput}
+                        onChangeText={value => setUserInput(value)}/>
+                    <TouchableOpacity onPress={() => console.log(user.name)} style={styles.searchIcon}>
+                        <FontAwesome name="search" size={24} color="black" />
+                    </TouchableOpacity>
                 </View>
-                <View style={{alignItems:'center'}}>
-                    <View style={styles.profileImage}>
-                        <Image source={require('../../assets/icon.png')} style={styles.image} resizeMode="center"/>
-                    </View>
-                </View>
-                <View style={styles.userInfoContainer}>
-                    <Text style={{fontWeight: "200", fontSize:36}}>Berk</Text>
-                    <Text style={{color: "#AEB5BC", fontSize:14}}>Country</Text>
-                </View>
-                <View style={styles.userStatsContainer}>
-                    <View style={styles.statsBox}>
-                        <Text style={{fontSize: 24}}>483</Text>
-                        <Text style={styles.statsText}>483</Text>
-                    </View>
-                    <View style={[styles.statsBox, {borderColor: '#DFD8C8', borderLeftWidth: 1, borderRightWidth:1}]}>
-                        <Text style={{fontSize: 24}}>483</Text>
-                        <Text style={styles.statsText}>483</Text>
-                    </View>
-                    <View style={styles.statsBox}>
-                        <Text style={{fontSize: 24}}>483</Text>
-                        <Text style={styles.statsText}>483</Text>
-                    </View>
-                </View>
+                {
+                    (<View>
+                        <View style={{alignItems:'center'}}>
+                            <View style={styles.profileImage}>
+                                <Image source={{uri: user.avatar_url}} style={styles.image} resizeMode="center"/>
+                            </View>
+                        </View>
+                        <View style={styles.userInfoContainer}>
+                            <Text style={{fontWeight: "200", fontSize:36}}>{user.name}</Text>
+                            <Text style={{color: "#AEB5BC", fontSize:14}}>{user.location}</Text>
+                            <Text style={{color: "#AEB5BC", fontSize:14}}>{user.company}</Text>
+                        </View>
+                        <View style={styles.userStatsContainer}>
+                            <View style={styles.statsBox}>
+                                <Text style={{fontSize: 24}}>{user.followers}</Text>
+                                <Text style={styles.statsText}>Followers</Text>
+                            </View>
+                            <View style={[styles.statsBox, {borderColor: '#DFD8C8', borderLeftWidth: 1, borderRightWidth:1}]}>
+                                <Text style={{fontSize: 24}}>{user.following}</Text>
+                                <Text style={styles.statsText}>Following</Text>
+                            </View>
+                            <View style={styles.statsBox}>
+                                <Text style={{fontSize: 24}}>{user.public_repos}</Text>
+                                <Text style={styles.statsText}>Repositories</Text>
+                            </View>
+                        </View>
+                    </View>)
+                }
             </ScrollView>
         </SafeAreaView>
     );
 }
+
 
 export default ProfileScreen;
 
 const styles = StyleSheet.create({
     searchIcon: {
         marginVertical:10,
+        marginHorizontal: 10,
     },
     textInput: {
         flex:1,
@@ -84,7 +79,8 @@ const styles = StyleSheet.create({
         marginHorizontal: 10,
         borderWidth:1,
         borderRadius:5,
-        backgroundColor:'#EEEEEE'
+        backgroundColor:'#EEEEEE',
+        textTransform: 'lowercase'
     },
     profileImage: {
         width: 200,
