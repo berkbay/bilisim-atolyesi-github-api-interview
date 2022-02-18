@@ -1,36 +1,26 @@
-import React from "react";
-import { View , Text, StyleSheet} from "react-native";
+import React, {useEffect} from "react";
+import { View} from "react-native";
+import Repository from "../components/Repository";
+import {useDispatch} from "react-redux";
+import {getRepos} from "../store/actions";
+import {useRoute} from "@react-navigation/native";
 
 const RepositoriesScreen = () => {
+
+    const dispatch = useDispatch()
+    const route = useRoute()
+    const {username} = route.params
+
+    useEffect(() => {
+        dispatch(getRepos(username))
+    },[])
+
     return (
         <View>
-            <View style={styles.repoContainer}>
-                <Text>Hello</Text>
-            </View>
-            <View style={styles.repoContainer}>
-                <Text>Hello</Text>
-            </View>
-            <View style={styles.repoContainer}>
-                <Text>Hello</Text>
-            </View>
-            <View style={styles.repoContainer}>
-                <Text>Hello</Text>
-            </View>
+            <Repository/>
         </View>
     );
 }
 
 export default RepositoriesScreen;
 
-const styles = StyleSheet.create({
-    repoContainer: {
-        flex:1,
-        height: 100,
-        borderRadius: 10,
-        paddingVertical: 10,
-        paddingHorizontal: 10,
-        marginHorizontal: 10,
-        marginVertical: 10,
-        borderWidth: 0.4,
-    }
-})

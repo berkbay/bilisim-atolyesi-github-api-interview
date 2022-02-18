@@ -4,16 +4,17 @@ import {FontAwesome} from "@expo/vector-icons";
 
 import { useSelector, useDispatch} from "react-redux";
 import {getUser} from "../store/actions";
+import {useNavigation} from "@react-navigation/native";
+import GoToRepositoryPage from "../components/GoToRepoButton";
 
 const ProfileScreen = () => {
 
+    const navigation = useNavigation()
     const user = useSelector((state) => state.user)
     const dispatch = useDispatch()
 
     const [userInput, setUserInput] = useState('');
     const [error, setError] = useState(null)
-
-
 
     useEffect(() => {
         dispatch(getUser(userInput))
@@ -33,8 +34,8 @@ const ProfileScreen = () => {
                         style={styles.textInput}
                         value={userInput}
                         onChangeText={value => setUserInput(value)}/>
-                    <TouchableOpacity onPress={() => console.log(user)}style={styles.searchIcon}>
-                        <FontAwesome name="search" size={24} color="black" />
+                    <TouchableOpacity onPress={() => console.log(userInput)} style={styles.searchIcon}>
+                        <FontAwesome style={styles.searchIcon} name="search" size={24} color="black" />
                     </TouchableOpacity>
                 </View>
                 {error ? <View><Text>{error}</Text></View> :
@@ -67,6 +68,7 @@ const ProfileScreen = () => {
                                 <Text style={styles.statsText}>Repositories</Text>
                             </View>
                         </View>
+                        <GoToRepositoryPage props={{username: userInput}}/>
                     </View>)
                 }
             </ScrollView>
@@ -125,4 +127,7 @@ const styles = StyleSheet.create({
         textTransform: 'uppercase',
         fontWeight: "500"
     },
+    button: {
+
+    }
 })
