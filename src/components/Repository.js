@@ -1,14 +1,13 @@
-import {Text, View, StyleSheet} from "react-native";
+import {Text, View, StyleSheet, ScrollView} from "react-native";
 import React from "react";
 import {useSelector} from "react-redux";
 
 const Repository = () => {
     const repos = useSelector((state) => state.repos)
-    console.log(repos)
     return (
-        <View>
+        <ScrollView>
             {repos.length ? repos.map((item) =>
-                <View style={styles.repoContainer}>
+                <View key={item.id} style={styles.repoContainer}>
                     <Text>{item.name}</Text>
                     <Text>{item.created_at}</Text>
                     <Text>{item.language}</Text>
@@ -19,7 +18,7 @@ const Repository = () => {
                 </View>
             )
             }
-        </View>
+        </ScrollView>
     );
 }
 

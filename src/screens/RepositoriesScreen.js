@@ -13,7 +13,7 @@ const RepositoriesScreen = () => {
 
     useEffect(() => {
         dispatch(getRepos(username))
-    },[])
+    },[username])
 
     return (
         <View>

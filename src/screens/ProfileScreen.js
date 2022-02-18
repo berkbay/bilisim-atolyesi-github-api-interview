@@ -1,10 +1,9 @@
-import React, {useEffect, useState} from "react";
+import React, {useCallback, useState} from "react";
 import {View, SafeAreaView, ScrollView, Image, StyleSheet, TextInput, Text, TouchableOpacity,} from "react-native";
 import {FontAwesome} from "@expo/vector-icons";
 
 import { useSelector, useDispatch} from "react-redux";
 import {getUser} from "../store/actions";
-import {useNavigation} from "@react-navigation/native";
 import GoToRepositoryPage from "../components/GoToRepoButton";
 
 const ProfileScreen = () => {
@@ -15,12 +14,9 @@ const ProfileScreen = () => {
 
     const [userInput, setUserInput] = useState('');
 
-    const searchUser = React.useCallback(() => {
+    const searchUser = useCallback(() => {
         dispatch(getUser(userInput))
-        console.log('DEBUG USER',user)
     },[userInput, user])
-
-    console.log('DEBUG ERROR', errorMessage)
 
     return (
         <SafeAreaView>

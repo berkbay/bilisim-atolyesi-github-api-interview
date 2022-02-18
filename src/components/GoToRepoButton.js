@@ -1,6 +1,7 @@
 import {Text, TouchableOpacity, StyleSheet} from "react-native";
 import React from "react";
 import {useNavigation} from "@react-navigation/native";
+import {AntDesign} from "@expo/vector-icons";
 
 const GoToRepositoryPage = (props) => {
 
@@ -9,8 +10,9 @@ const GoToRepositoryPage = (props) => {
     return (
         <TouchableOpacity
             style={styles.button}
-            onPress={() => navigation.navigate('Repositories',{username: props.username})}>
-            <Text>Go toRepositories</Text>
+            onPress={() => navigation.navigate('Repositories',{username: props.props.username})}>
+            <Text style={styles.text}>Go To Repositories</Text>
+            <AntDesign style={{alignSelf:'center', paddingHorizontal: 5, paddingVertical: 5}} name="right" size={36} color="black" />
         </TouchableOpacity>
     );
 }
@@ -19,6 +21,18 @@ export default GoToRepositoryPage;
 
 const styles = StyleSheet.create({
     button: {
-        borderWidth: 1
+        flexDirection:'row',
+        marginVertical:10,
+        marginHorizontal: 10,
+        borderWidth: 1,
+        borderRadius: 10,
+        backgroundColor: '#FFE690'
+    },
+    text:{
+        alignSelf: 'center',
+        paddingHorizontal: 5,
+        paddingVertical: 5,
+        fontSize: 36,
+        fontWeight: 'bold'
     }
 })
