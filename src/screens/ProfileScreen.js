@@ -11,11 +11,19 @@ const ProfileScreen = () => {
     const dispatch = useDispatch()
 
     const [userInput, setUserInput] = useState('');
-    // const [error, setError] = useState(null)
+    const [error, setError] = useState(null)
+
+
 
     useEffect(() => {
         dispatch(getUser(userInput))
+        if(user.message) {
+            setError(user.message)
+        }else {
+            setError(null)
+        }
     },[])
+
 
     return (
         <SafeAreaView>
@@ -25,28 +33,32 @@ const ProfileScreen = () => {
                         style={styles.textInput}
                         value={userInput}
                         onChangeText={value => setUserInput(value)}/>
-                    <TouchableOpacity onPress={() => console.log(user.name)} style={styles.searchIcon}>
+                    <TouchableOpacity onPress={() => console.log(user)}style={styles.searchIcon}>
                         <FontAwesome name="search" size={24} color="black" />
                     </TouchableOpacity>
                 </View>
-                {
+                {error ? <View><Text>{error}</Text></View> :
                     (<View>
-                        <View style={{alignItems:'center'}}>
+                        <View style={{alignItems: 'center'}}>
                             <View style={styles.profileImage}>
                                 <Image source={{uri: user.avatar_url}} style={styles.image} resizeMode="center"/>
                             </View>
                         </View>
                         <View style={styles.userInfoContainer}>
-                            <Text style={{fontWeight: "200", fontSize:36}}>{user.name}</Text>
-                            <Text style={{color: "#AEB5BC", fontSize:14}}>{user.location}</Text>
-                            <Text style={{color: "#AEB5BC", fontSize:14}}>{user.company}</Text>
+                            <Text style={{fontWeight: "200", fontSize: 36}}>{user.name}</Text>
+                            <Text style={{color: "#AEB5BC", fontSize: 14}}>{user.location}</Text>
+                            <Text style={{color: "#AEB5BC", fontSize: 14}}>{user.company}</Text>
                         </View>
                         <View style={styles.userStatsContainer}>
                             <View style={styles.statsBox}>
                                 <Text style={{fontSize: 24}}>{user.followers}</Text>
                                 <Text style={styles.statsText}>Followers</Text>
                             </View>
-                            <View style={[styles.statsBox, {borderColor: '#DFD8C8', borderLeftWidth: 1, borderRightWidth:1}]}>
+                            <View style={[styles.statsBox, {
+                                borderColor: '#DFD8C8',
+                                borderLeftWidth: 1,
+                                borderRightWidth: 1
+                            }]}>
                                 <Text style={{fontSize: 24}}>{user.following}</Text>
                                 <Text style={styles.statsText}>Following</Text>
                             </View>
